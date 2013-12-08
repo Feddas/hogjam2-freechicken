@@ -44,6 +44,7 @@ public class NewBehaviourScript : MonoBehaviour
 	//public Transform cube;
 	public Transform quad;
 	public Transform textThing;
+	private string levelName;
 
 	private Sprite player;
 
@@ -55,10 +56,14 @@ public class NewBehaviourScript : MonoBehaviour
 	{
 		this.quad.transform.position = new Vector3(999999, 999999, 0); // hide!
 		this.InitializeLevel("level_1");
+		this.startLoc = new int[] { 128 + 32, 9 * 64 + 32 };
+		this.player.ModelX = this.startLoc[0];
+		this.player.ModelY = this.startLoc[1];
 	}
 
 	private void InitializeLevel(string levelId)
 	{
+		this.levelName = levelId;
 		if (this.level != null)
 		{
 			foreach (Sprite sprite in this.sprites)
@@ -105,6 +110,10 @@ public class NewBehaviourScript : MonoBehaviour
 
 	private void ProcessInput()
 	{
+		if (this.deathSequenceCounter >= 0)
+		{
+			return;
+		}
 		double pdx = Input.GetAxis("Horizontal");
 		double pdy = -Input.GetAxis("Vertical");
 
@@ -217,6 +226,7 @@ public class NewBehaviourScript : MonoBehaviour
 			case "tile_wall": return this.wallMaterial;
 			case "door": return this.doorMaterial;
 			case "wtile": return this.wall2Material;
+			case "chicken": return this.chickenRightBeak0;
 			case "player_beak_stand": return this.chickenRightBeak0;
 			case "player_beak_walk_1": return this.chickenRightBeak1;
 			case "player_beak_walk_2": return this.chickenRightBeak2;
@@ -289,6 +299,10 @@ public class NewBehaviourScript : MonoBehaviour
 		float unityHeight = height * 40 / 3f / 1024;
 		float unityX = this.ConvertX(x) + unityWidth / 2;
 		float unityY = this.ConvertY(y) - unityHeight / 2;
+		if (rect == null)
+		{
+			throw new System.Exception("What? " + image);
+		}
 		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
 		rect.transform.localScale = new Vector3(reverse ? -unityWidth : unityWidth, unityHeight, 1);
 		rect.renderer.material = this.GetTexture(image);
@@ -320,6 +334,7 @@ public class NewBehaviourScript : MonoBehaviour
 		}
 	}
 
+	private int[] startLoc;
 	private void UpdateImpl()
 	{
 		if (this.cutsceneIndex >= 0)
@@ -345,10 +360,12 @@ public class NewBehaviourScript : MonoBehaviour
 			if (!sprite.isDead)
 			{
 				newSprites.Add(sprite);
-
-				if (sprite.Type == "alien") aliens.Add(sprite);
-				else if (sprite.FriendlyProjectile) friendlyProjectiles.Add(sprite);
-				else if (sprite.HostileProjectile) hostileProjectiles.Add(sprite);
+				if (this.deathSequenceCounter < 0)
+				{
+					if (sprite.Type == "alien") aliens.Add(sprite);
+					else if (sprite.FriendlyProjectile) friendlyProjectiles.Add(sprite);
+					else if (sprite.HostileProjectile) hostileProjectiles.Add(sprite);
+				}
 			}
 		}
 
@@ -389,6 +406,23 @@ public class NewBehaviourScript : MonoBehaviour
 			}
 		}
 
+		double px = this.player.ModelX;
+		double py = this.player.ModelY;
+
+		for (int i = 0; i < aliens.Count; ++i)
+		{
+			Sprite alien = aliens[i];
+			dx = alien.ModelX - px;
+			dy = alien.ModelY - py;
+			d = dx * dx + dy * dy;
+			if (d < 32 * 32)
+			{
+				this.deathSequenceCounter = 120;
+				this.deathLocation = new int[] { (int)px, (int)py };
+			}
+		}
+
+
 		this.sprites = newSprites;
 
 		int tileX = (int)(this.player.ModelX / 64);
@@ -413,12 +447,29 @@ public class NewBehaviourScript : MonoBehaviour
 					int dTileX = this.level.DoorLocations[targetDoorNum][0];
 					int dTileY = this.level.DoorLocations[targetDoorNum][1];
 					dTileX += onRight ? 1 : -1;
-					this.player.ModelX = dTileX * 64 + 32;
-					this.player.ModelY = dTileY * 64 + 32;
+					this.startLoc = new int[] { dTileX * 64 + 32, dTileY * 64 + 32};
+					this.player.ModelX = this.startLoc[0];
+					this.player.ModelY = this.startLoc[1]; 
+					
 				}
 			}
 		}
+
+		if (this.deathSequenceCounter == 0)
+		{
+			this.deathSequenceCounter = -1;
+			this.InitializeLevel(this.levelName);
+			int startX = this.startLoc[0];
+			int startY = this.startLoc[1];
+			this.player.ModelX = startX;
+			this.player.ModelY = startY;
+		}
+
+		this.deathSequenceCounter--;
 	}
+
+	private int deathSequenceCounter = -1;
+	private int[] deathLocation = null;
 
 	private int cutsceneIndex = -1;
 
@@ -440,6 +491,7 @@ public class NewBehaviourScript : MonoBehaviour
 	}
 
 	private Transform bgTrans = null;
+	private Transform chickenTrans = null;
 
 	private void Render()
 	{
@@ -478,10 +530,36 @@ public class NewBehaviourScript : MonoBehaviour
 		}
 
 		this.level.Render(this, cameraX, cameraY);
-
+		bool showPlayer = this.deathSequenceCounter < 0;
+		if (this.chickenTrans == null)
+		{
+			this.chickenTrans = this.AllocateTransform();
+			if (this.chickenTrans == null)
+			{
+				throw new System.Exception("Why is allocate transform returning null?");
+			}
+		}
 		foreach (Sprite sprite in this.sprites)
 		{
-			sprite.Render(this, cameraX, cameraY);
+			if (!showPlayer && sprite.Type == "player")
+			{
+				int counter = 120 - this.deathSequenceCounter;
+				int x = this.deathLocation[0];
+				int t = counter - 30;
+				int y = this.deathLocation[1] + (t * t) / 10 - 64;
+
+				this.DrawImage(this.chickenTrans, "chicken", x - 32 - cameraX, y - 32 - cameraY, 64, 64, false);
+				this.player.Render(this, -999999, -99999);
+			}
+			else
+			{
+				sprite.Render(this, cameraX, cameraY);
+			}
+		}
+
+		if (showPlayer)
+		{
+			this.DrawImage(this.chickenTrans, "chicken", -9999, 0, 64, 64, false);
 		}
 	}
 }
