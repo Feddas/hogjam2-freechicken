@@ -317,9 +317,7 @@ public class Sprite
 		if (col < 0 || col >= level.Width || row < 0 || row >= level.Height) return false;
 
 		Tile t = level.Tiles[col][row];
-		if (t == null) return true;
-
-		// TODO: passable tiles
+		if (t == null || t.IsPassable) return true;
 		return false;
 	}
 }
