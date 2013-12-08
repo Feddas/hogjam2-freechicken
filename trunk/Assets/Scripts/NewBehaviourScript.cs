@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class NewBehaviourScript : MonoBehaviour
 {
 	public Material wallMaterial;
+	public Material doorMaterial;
+
 	public Material chickenRightBeak0;
 	public Material chickenRightBeak1;
 	public Material chickenRightBeak2;
@@ -29,6 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 	public Material alienFiring;
 
+
 	//public Transform cube;
 	public Transform quad;
 	public Transform textThing;
@@ -42,8 +45,22 @@ public class NewBehaviourScript : MonoBehaviour
 	void Start()
 	{
 		this.quad.transform.position = new Vector3(999999, 999999, 0); // hide!
+		this.InitializeLevel("level_1");
+	}
 
-		this.level = new Level("level_1");
+	private void InitializeLevel(string levelId)
+	{
+		if (this.level != null)
+		{
+			foreach (Sprite sprite in this.sprites)
+			{
+				sprite.Kill(this);
+			}
+			this.sprites = new List<Sprite>();
+			this.level.FreeAllAssets(this);
+		}
+
+		this.level = new Level(levelId);
 		this.player = new Sprite("player", 130, 300, null);
 		this.sprites.Add(this.player);
 
@@ -57,6 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
 			this.sprites.Add(new Sprite("alien", x, y, null));
 		}
 	}
+
 
 	private double lastTime = 0;
 	private const int INTENDED_FPS = 30;
@@ -184,6 +202,7 @@ public class NewBehaviourScript : MonoBehaviour
 		switch (id)
 		{
 			case "tile_wall": return this.wallMaterial;
+			case "door": return this.doorMaterial;
 			case "player_beak_stand": return this.chickenRightBeak0;
 			case "player_beak_walk_1": return this.chickenRightBeak1;
 			case "player_beak_walk_2": return this.chickenRightBeak2;
@@ -288,6 +307,18 @@ public class NewBehaviourScript : MonoBehaviour
 
 		this.sprites = newSprites;
 
+		int tileX = (int)(this.player.ModelX / 64);
+		int tileY = (int)(this.player.ModelY / 64);
+
+		Tile tile = this.level.Tiles[tileX][tileY];
+		if (tile != null && tile.IsDoor)
+		{
+			string targetLevel = this.level.DoorHookup[tile.ID - '0'];
+			if (targetLevel != null)
+			{
+				this.InitializeLevel(targetLevel);
+			}
+		}
 	}
 
 	private const int SCREEN_WIDTH = 1024;

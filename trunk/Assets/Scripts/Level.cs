@@ -11,6 +11,8 @@ public class Level
 
 	public List<int[]> alienSpawns = new List<int[]>();
 
+	public Dictionary<int, string> DoorHookup = new Dictionary<int, string>();
+
 	public Level(string title)
 	{
 		MapData data = MapData.RAW_LEVEL_DATA[title];
@@ -30,6 +32,11 @@ public class Level
 					id = ' ';
 					this.alienSpawns.Add(new int[] { x, y });
 				}
+				else if (id >= '0' && id <= '9')
+				{
+					int doorNum = id - '0';
+					this.DoorHookup[doorNum] = data.DoorLookup.ContainsKey(doorNum) ? data.DoorLookup[doorNum] : null;
+				}
 				column.Add(this.GetTile(id, x, y));
 			}
 			columns.Add(column.ToArray());
@@ -40,6 +47,25 @@ public class Level
 		this.Width = width;
 		this.Height = height;
 		this.Optimize();
+	}
+
+	public void FreeAllAssets(NewBehaviourScript scene)
+	{
+		Tile tile;
+		for (int y = 0; y < this.Height; ++y)
+		{
+			for (int x = 0; x < this.Width; ++x)
+			{
+				tile = this.Tiles[x][y];
+				if (tile != null)
+				{
+					if (tile.Transform != null)
+					{
+						scene.RemoveTransform(tile.Transform);
+					}
+				}
+			}
+		}
 	}
 
 	private void Optimize()
