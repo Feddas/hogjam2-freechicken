@@ -78,9 +78,11 @@ public class NewBehaviourScript : MonoBehaviour
 		this.previousX = pdx;
 		this.previousY = pdy;
 
+		bool shiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
 		double dx = 0;
 		double dy = 0;
-		double v = 3;
+		double v = shiftPressed ? 8 : 3;
 		if (leftPressed) dx -= v;
 		if (rightPressed) dx += v;
 		if (upPressed) dy -= v;
@@ -88,7 +90,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 		this.player.DX = dx;
 
-		bool spacePressed = Input.GetKeyDown(KeyCode.Space);
+		bool spacePressed = Input.GetKey(KeyCode.Space);
 		if (spacePressed != this.spacePressed)
 		{
 			if (spacePressed)
@@ -229,32 +231,5 @@ public class NewBehaviourScript : MonoBehaviour
 		{
 			sprite.Render(this, cameraX, cameraY);
 		}
-
-		/*
-		++fooCounter;
-		int index = 0;
-		for (int y = 0; y < 768; y += 64)
-		{
-			for (int x = 0; x < 1024; x += 64)
-			{
-				Transform t = test[index];
-				if (t == null) {
-					t = AllocateTransform();
-					test[index] = t;
-					c[index] = new Color((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
-				}
-				this.DrawRectangle(t, c[index], x, y, fooCounter % 64 + 1, fooCounter % 64 + 1);
-				++index;
-
-			}
-		}//*/
-
 	}
-
-	private int fooCounter = 0;
-
-	private System.Random r = new System.Random();
-
-	private Color[] c = new Color[1024 / 64 * 1024 / 64];
-	private Transform[] test = new Transform[1024 / 64 * 1024 / 64];
 }
