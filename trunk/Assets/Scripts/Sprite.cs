@@ -52,6 +52,16 @@ public class Sprite
 		}
 	}
 
+	private int featherCooldown = -1;
+	public void ThrowFeather(NewBehaviourScript scene)
+	{
+		if (featherCooldown < 0)
+		{
+			scene.AddSprite(new Sprite("feather", this.ModelX, this.ModelY, this));
+			this.featherCooldown = 30;
+		}
+	}
+
 	public double DX = 0;
 	private double vy = 0;
 	private Sprite player;
@@ -95,6 +105,13 @@ public class Sprite
 				ys[i] = -System.Math.Sin(3.14159 * 2 * i / POINT_COUNT) * radius + centerY;
 			}
 		}
+		else if (type == "feather")
+		{
+			this.floats = true;
+			Sprite player = arg as Sprite;
+			this.player = player;
+			this.faceRight = this.player.faceRight;
+		}
 		else if (type == "alien")
 		{
 
@@ -122,6 +139,11 @@ public class Sprite
 
 			case "beak":
 				imageId = "beak_" + ((this.renderCounter / 6) % 4);
+				break;
+
+			case "feather":
+				imageId = "feather";
+				reverse = this.faceRight;
 				break;
 
 			case "alien":
@@ -182,6 +204,24 @@ public class Sprite
 				this.beakCounter++;
 				break;
 
+			case "feather":
+				double fv = 9;
+				if (this.faceRight)
+				{
+					this.DX = fv;
+				}
+				else
+				{
+					this.DX = -fv;
+				}
+
+				if (this.lastWasCollision)
+				{
+					this.Kill(scene);
+				}
+
+				break;
+
 			case "alien":
 				// if cross tile boundary check if there's ground
 				if (this.lastWasCollision)
@@ -217,8 +257,6 @@ public class Sprite
 					}
 				}
 
-
-
 				break;
 
 			default: break;
@@ -227,9 +265,8 @@ public class Sprite
 
 	public void ApplyMovement(Level level)
 	{
+		featherCooldown--;
 		this.lastWasCollision = false;
-
-		if (this.floats) return;
 
 		double newX = this.ModelX + this.DX;
 		double groundY = this.ModelY + 32;
@@ -253,6 +290,8 @@ public class Sprite
 		}
 
 		this.DX = 0;
+
+		if (this.floats) return;
 
 		int tileX = (int)(this.ModelX / 64);
 		int tileY = (int)(groundY / 64);

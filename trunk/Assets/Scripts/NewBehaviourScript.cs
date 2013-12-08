@@ -24,6 +24,8 @@ public class NewBehaviourScript : MonoBehaviour
 	public Material beak2;
 	public Material beak3;
 
+	public Material feather;
+
 	public Material alienLeg1M1;
 	public Material alienLeg1M2;
 	public Material alienLeg1M3;
@@ -136,7 +138,7 @@ public class NewBehaviourScript : MonoBehaviour
 		this.previousY = pdy;
 
 		bool shiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-
+		
 		double dx = 0;
 		double dy = 0;
 		double v = shiftPressed ? 8 : 3;
@@ -166,6 +168,10 @@ public class NewBehaviourScript : MonoBehaviour
 			this.player.RemoveBeak(this);
 		}
 
+		if (Input.GetKeyDown(KeyCode.F))
+		{
+			this.player.ThrowFeather(this);
+		}
 	}
 
 	List<Sprite> sprites = new List<Sprite>();
@@ -219,6 +225,7 @@ public class NewBehaviourScript : MonoBehaviour
 			case "beak_1": return this.beak1;
 			case "beak_2": return this.beak2;
 			case "beak_3": return this.beak3;
+			case "feather": return this.feather;
 			case "alien_walk0_mouth0": return this.alienLeg1M1;
 			case "alien_walk0_mouth1": return this.alienLeg1M2;
 			case "alien_walk0_mouth2": return this.alienLeg1M3;
