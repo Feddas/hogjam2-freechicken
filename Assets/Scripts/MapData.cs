@@ -14,20 +14,20 @@ public class MapData
 	public static readonly MapData LEVEL_1 = new MapData()
 	{
 		Tiles = new string[] {
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"x                       x",
-			"x  x                    x",
-			"x                       x",
-			"x                       x",
-			"x                       x",
-			"x         xxx           x",
-			"x         xxx           x",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xx                       xx",
+			"xx  x                    xx",
+			"xx                  A    xx",
+			"xx                xxxx   xx",
+			"xx          A            2x",
+			"xx         xxx         xxxx",
+			"x1         xxx           xx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		}
 	};
 
