@@ -31,6 +31,7 @@ public class MapData
 	}
 	/*	Tile ID's:
 	 *		x = wall
+	 *		w = wall 2
 	 *		[space] = empty space
 	 *		1 through 9 = doors (define targets below)
 	 *		A = Alien
@@ -60,7 +61,7 @@ public class MapData
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		},
 		Doors = new string[] { 
-			"2:level_2:1+"
+			"2:level_2:1+",
 		},
 	};
 
@@ -88,8 +89,80 @@ public class MapData
 		},
 	};
 
+	public static readonly MapData LEVEL_3 = new MapData()
+	{
+		Tiles = new string[] {
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xx                       xx",
+			"xx  x                    xx",
+			"xx                  A    xx",
+			"xx                wwww   xx",
+			"xx          A            2x",
+			"xx         www         wwwx",
+			"x1         xxx           xx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		},
+		Doors = new string[] { 
+			"2:level_2:1+"
+		},
+	};
+
+	public static readonly MapData LEVEL_4 = new MapData()
+	{
+		Tiles = new string[] {
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xx                       xx",
+			"xx  x                    xx",
+			"xx                  A    xx",
+			"xx                wwww   xx",
+			"xx          A            2x",
+			"xx         www         wwwx",
+			"x1         xxx           xx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		},
+		Doors = new string[] { 
+			"2:level_2:1+"
+		},
+	};
+
+	public static readonly MapData LEVEL_5 = new MapData()
+	{
+		Tiles = new string[] {
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xx                       xx",
+			"xx  x                    xx",
+			"xx                  A    xx",
+			"xx                wwww   xx",
+			"xx          A            2x",
+			"xx         www         wwwx",
+			"x1         xxx           xx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		},
+		Doors = new string[] { 
+			"2:level_2:1+"
+		},
+	};
+
 	public static readonly Dictionary<string, MapData> RAW_LEVEL_DATA = new Dictionary<string, MapData>() {
 		{ "level_1", LEVEL_1 },
 		{ "level_2", LEVEL_2 },
+		{ "level_3", LEVEL_2 },
+		{ "level_4", LEVEL_2 },
+		{ "level_5", LEVEL_2 },
 	};
 }
