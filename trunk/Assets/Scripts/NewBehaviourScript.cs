@@ -12,7 +12,8 @@ public class NewBehaviourScript : MonoBehaviour
 	public Material chickenRightNoBeak1;
 	public Material chickenRightNoBeak2;
 
-	public Transform cube;
+	//public Transform cube;
+	public Transform quad;
 
 	private double x = 0;
 	private double y = 0;
@@ -23,7 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 	void Start()
 	{
-		this.cube.transform.position = new Vector3(999999, 999999, 0); // hide!
+		this.quad.transform.position = new Vector3(999999, 999999, 0); // hide!
 
 		this.level = new Level("level_1");
 		this.player = new Sprite("player", 100, 100);
@@ -126,7 +127,7 @@ public class NewBehaviourScript : MonoBehaviour
 		}
 		else
 		{
-			t = Instantiate(this.cube) as Transform;
+			t = Instantiate(this.quad) as Transform;
 		}
 		t.transform.position = new Vector3(-999999, 0, 0);
 		return t;
@@ -192,7 +193,7 @@ public class NewBehaviourScript : MonoBehaviour
 		float unityX = this.ConvertX(x) + unityWidth / 2;
 		float unityY = this.ConvertY(y) - unityHeight / 2;
 		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
-		rect.transform.localScale = new Vector3(reverse ? unityWidth : -unityWidth, -unityHeight, 1);
+		rect.transform.localScale = new Vector3(reverse ? -unityWidth : unityWidth, unityHeight, 1);
 		rect.renderer.material = this.GetTexture(image);
 	}
 
