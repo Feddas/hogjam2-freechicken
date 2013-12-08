@@ -6,12 +6,14 @@ public class MapData
 
 	public MapData()
 	{
+		this.TargetDoorInfo = new Dictionary<int, string>();
 		this.DoorLookup = new Dictionary<int, string>();
 	}
 
 	public string[] Tiles { get; set; }
 
 	public Dictionary<int, string> DoorLookup { get; private set; }
+	public Dictionary<int, string> TargetDoorInfo { get; private set; }
 	public string[] Doors
 	{
 		get { return null; } // OMGHAX
@@ -23,6 +25,7 @@ public class MapData
 				int num = int.Parse(parts[0]);
 				string target = parts[1].Trim();
 				this.DoorLookup[num] = target;
+				this.TargetDoorInfo[num] = parts[2].Trim();
 			}
 		}
 	}
@@ -34,6 +37,8 @@ public class MapData
 	 *		
 	 * Door format:
 	 *		door ID, colon, target level name, colon, target door ID, plus or minus to appear on the right or left of the target door
+	 *		
+	 *		If the door target door ID is just * that's the final exit to trigger victory
 	 */
 
 	public static readonly MapData LEVEL_1 = new MapData()
@@ -79,7 +84,7 @@ public class MapData
 		},
 		Doors = new string[] { 
 			"1:level_1:2-",
-			"2:level_2:1+"
+			"2:level_2:*"
 		},
 	};
 

@@ -7,6 +7,10 @@ public class NewBehaviourScript : MonoBehaviour
 	public Material wallMaterial;
 	public Material doorMaterial;
 	public Material wall2Material;
+	
+	public Material cutscenePage0;
+	public Material cutscenePage1;
+	public Material cutscenePage2;
 
 	public Material chickenRightBeak0;
 	public Material chickenRightBeak1;
@@ -224,6 +228,9 @@ public class NewBehaviourScript : MonoBehaviour
 			case "alien_stand_mouth0": return this.alienLeg3M1;
 			case "alien_stand_mouth1": return this.alienLeg3M2;
 			case "alien_stand_mouth2": return this.alienLeg3M3;
+			case "win_0": return this.cutscenePage0;
+			case "win_1": return this.cutscenePage1;
+			case "win_2": return this.cutscenePage2;
 			default: throw new System.Exception("Unknown texture: " + id);
 		}
 	}
@@ -288,9 +295,29 @@ public class NewBehaviourScript : MonoBehaviour
 		this.Render();
 	}
 
+	private long cutsceneStart = 0;
+
+	private void DoCutsceneUpdate()
+	{
+		if (this.cutsceneIndex < 2)
+		{
+			double seconds = (System.DateTime.Now.Ticks - this.cutsceneStart) / 10000000.0;
+			if (seconds > 5)
+			{
+				this.cutsceneIndex++;
+				this.cutsceneStart = System.DateTime.Now.Ticks;
+			}
+		}
+	}
 
 	private void UpdateImpl()
 	{
+		if (this.cutsceneIndex >= 0)
+		{
+			this.DoCutsceneUpdate();
+			return;
+		}
+
 		foreach (Sprite sprite in this.sprites)
 		{
 			sprite.ApplyAutomation(this);
@@ -318,16 +345,53 @@ public class NewBehaviourScript : MonoBehaviour
 			string targetLevel = this.level.DoorHookup[tile.ID - '0'];
 			if (targetLevel != null)
 			{
+				string targetDoor = this.level.TargetDoorInfo[tile.ID - '0'];
 				this.InitializeLevel(targetLevel);
+				if (targetDoor == "*")
+				{
+					this.YouWin();
+				}
+				else
+				{
+					bool onRight = targetDoor[targetDoor.Length - 1] == '+';
+					int targetDoorNum = targetDoor[0] - '0';
+					int dTileX = this.level.DoorLocations[targetDoorNum][0];
+					int dTileY = this.level.DoorLocations[targetDoorNum][1];
+					dTileX += onRight ? 1 : -1;
+					this.player.ModelX = dTileX * 64 + 32;
+					this.player.ModelY = dTileY * 64 + 32;
+				}
 			}
 		}
+	}
+
+	private int cutsceneIndex = -1;
+
+	private Transform finalCutsceneTransform = null;
+
+	private void YouWin()
+	{
+		this.cutsceneIndex = 0;
+		this.cutsceneStart = System.DateTime.Now.Ticks;
+		this.finalCutsceneTransform = this.AllocateTransform();
 	}
 
 	private const int SCREEN_WIDTH = 1024;
 	private const int SCREEN_HEIGHT = 768;
 
+	private void DoCutsceneRender()
+	{
+		this.DrawImage(this.finalCutsceneTransform, "win_" + this.cutsceneIndex, 0, 0, 1024, 768, false);
+	}
+
 	private void Render()
 	{
+		if (this.cutsceneIndex >= 0)
+		{
+			this.DoCutsceneRender();
+			return;
+		}
+
 		int cameraX = (int)this.player.ModelX - SCREEN_WIDTH / 2;
 		int cameraY = (int)this.player.ModelY - SCREEN_HEIGHT / 2;
 
