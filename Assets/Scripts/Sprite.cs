@@ -9,12 +9,14 @@ public class Sprite
 
 	private Tile ground = null;
 
+	private double GRAVITY = .2;
+
 	public void Jump()
 	{
 		if (this.ground != null)
 		{
 			this.ground = null;
-			this.vy = -8;
+			this.vy = -32;
 		}
 	}
 
@@ -59,8 +61,6 @@ public class Sprite
 		scene.DrawRectangle(this.transform, this.CurrentColor, x, y, 64, 64);
 	}
 
-	private double GRAVITY = 1;
-
 	public void ApplyMovement(Level level)
 	{
 		double newX = this.ModelX + this.DX;
@@ -68,7 +68,8 @@ public class Sprite
 
 		// Apply horizontal component
 
-		if (this.LocationAllowed(level, newX, groundY) && this.LocationAllowed(level, newX, groundY - 48))
+		if (this.LocationAllowed(level, newX, groundY - .000001) && 
+			this.LocationAllowed(level, newX, groundY - 48))
 		{
 			this.ModelX = newX;
 		}
