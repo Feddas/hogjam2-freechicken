@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-	public Transform wallTexture;
 	public Material wallMaterial;
 	public Transform cube;
 
@@ -23,8 +22,6 @@ public class NewBehaviourScript : MonoBehaviour
 		this.player = new Sprite("player", 100, 100);
 		this.sprites.Add(this.player);
 	}
-
-
 
 	private double lastTime = 0;
 	private const int INTENDED_FPS = 30;
