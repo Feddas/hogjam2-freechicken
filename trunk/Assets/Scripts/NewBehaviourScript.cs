@@ -224,6 +224,18 @@ public class NewBehaviourScript : MonoBehaviour
 		rect.renderer.material.color = color;
 	}
 
+	public void DrawImageTiled(Transform rect, string image, int x, int y, int width, int height, int tiledWidth, int tiledHeight)
+	{
+		float unityWidth = tiledWidth * 40 / 3f / 1024;
+		float unityHeight = tiledHeight * 40 / 3f / 1024;
+		float unityX = this.ConvertX(x) + unityWidth / 2;
+		float unityY = this.ConvertY(y) - unityHeight / 2;
+		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
+		rect.transform.localScale = new Vector3(unityWidth, unityHeight, 1);
+		rect.renderer.material = this.GetTexture(image);
+		rect.renderer.material.SetTextureScale("_MainTex", new Vector2(tiledWidth / width, tiledHeight / height));
+	}
+
 	public void DrawImage(Transform rect, string image, int x, int y, int width, int height, bool reverse)
 	{
 		float unityWidth = width * 40 / 3f / 1024;
@@ -294,8 +306,6 @@ public class NewBehaviourScript : MonoBehaviour
 		{
 			cameraY = -(SCREEN_HEIGHT - maxHeight) / 2;
 		}
-
-		
 
 		this.level.Render(this, cameraX, cameraY);
 

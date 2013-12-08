@@ -11,6 +11,8 @@ public class Sprite
 	private bool moving = false;
 	private bool faceRight = true;
 
+
+	private bool floats = false;
 	private Tile ground = null;
 
 	private double GRAVITY = 1.2;
@@ -70,6 +72,7 @@ public class Sprite
 
 		if (type == "beak")
 		{
+			this.floats = true;
 			xs = new double[POINT_COUNT];
 			ys = new double[POINT_COUNT];
 			Sprite player = arg as Sprite;
@@ -82,6 +85,10 @@ public class Sprite
 			for (int i = 0; i < POINT_COUNT; ++i)
 			{
 				xs[i] = centerX - reverse * System.Math.Cos(3.14159 * 2 * i / POINT_COUNT) * radius;
+				if (!player.faceRight)
+				{
+					xs[i] -= radius; // meh, tired of debugging the math. this'll do.
+				}
 				ys[i] = System.Math.Sin(3.14159 * 2 * i / POINT_COUNT) * radius + centerY;
 			}
 		}
@@ -162,6 +169,8 @@ public class Sprite
 
 	public void ApplyMovement(Level level)
 	{
+		if (this.floats) return;
+
 		double newX = this.ModelX + this.DX;
 		double groundY = this.ModelY + 32;
 
