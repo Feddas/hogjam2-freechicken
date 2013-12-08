@@ -31,6 +31,32 @@ public class Level
 		this.Tiles = columns.ToArray();
 		this.Width = width;
 		this.Height = height;
+		this.Optimize();
+	}
+
+	private void Optimize()
+	{
+		int width = this.Width;
+		int height = this.Height;
+		Tile tile, previousTile;
+		for (int y = 0; y < height; ++y)
+		{
+			tile = null;
+			previousTile = null;
+			for (int x = 0; x < width; ++x)
+			{
+				tile = this.Tiles[x][y];
+				if (tile != null && previousTile != null && tile.ID == previousTile.ID)
+				{
+					tile.OptimizedOut = true;
+					previousTile.Optimizations++;
+				}
+				else
+				{
+					previousTile = tile;
+				}
+			}
+		}
 	}
 
 	private Tile GetTile(char tileId, int x, int y)

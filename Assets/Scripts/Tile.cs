@@ -6,8 +6,10 @@ public class Tile   {
 	public int X;
 	public int Y;
 	public char ID;
-	public Transform TransformA;
-	public Transform TransformB;
+	public Transform Transform;
+
+	public int Optimizations = 1;
+	public bool OptimizedOut = false;
 
 	public Tile(char id, int x, int y)
 	{
@@ -18,17 +20,23 @@ public class Tile   {
 
 	public void Render(NewBehaviourScript scene, int cameraX, int cameraY)
 	{
-		if (this.TransformA == null)
+		if (this.OptimizedOut) return;
+
+		if (this.Transform == null)
 		{
-			this.TransformA = scene.AllocateTransform();
-			this.TransformB = scene.AllocateTransform();
+			this.Transform = scene.AllocateTransform();
 		}
 
 		int x = this.X * 64 - cameraX;
 		int y = this.Y * 64 - cameraY;
 
-		//scene.DrawRectangle(this.TransformA, Color.white, x, y, 64, 64);
-		//scene.DrawRectangle(this.TransformB, Color.red, x + 8, y + 8, 48, 48);
-		scene.DrawImage(this.TransformA, "tile_wall", x, y, 64, 64, false);
+		if (this.Optimizations == 1)
+		{
+			scene.DrawImage(this.Transform, "tile_wall", x, y, 64, 64, false);
+		}
+		else
+		{
+			scene.DrawImageTiled(this.Transform, "tile_wall", x, y, 64, 64, this.Optimizations * 64, 64);
+		}
 	}
 }
