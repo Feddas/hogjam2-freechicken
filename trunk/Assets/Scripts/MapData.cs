@@ -85,7 +85,7 @@ public class MapData
 		},
 		Doors = new string[] { 
 			"1:level_1:2-",
-			"2:level_2:*"
+			"2:level_3:1+"
 		},
 	};
 
@@ -96,19 +96,21 @@ public class MapData
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			"xx                       xx",
-			"xx  x                    xx",
-			"xx                  A    xx",
-			"xx                wwww   xx",
-			"xx          A            2x",
-			"xx         www         wwwx",
-			"x1         xxx           xx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xx  xxxxxxxxx            3x",
+			"xx          x         xxxxx",
+			"xxxxxxxxx   x            xx",
+			"xx      xx  x            xx",
+			"xx      x   x  A         xx",
+			"x1      x  xxxxxxx       2x",
+			"xxxx    x        xxxxxxxxxx",
+			"xxxx    xxxxx    xxxxxxxxxx",
+			"xxxx             xxxxxxxxxx",
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		},
 		Doors = new string[] { 
-			"2:level_2:1+"
+			"1:level_2:2-",
+			"2:level_3:*",
+			"3:level_1:1+",
 		},
 	};
 
@@ -161,7 +163,7 @@ public class MapData
 	public static readonly Dictionary<string, MapData> RAW_LEVEL_DATA = new Dictionary<string, MapData>() {
 		{ "level_1", LEVEL_1 },
 		{ "level_2", LEVEL_2 },
-		{ "level_3", LEVEL_2 },
+		{ "level_3", LEVEL_3 },
 		{ "level_4", LEVEL_2 },
 		{ "level_5", LEVEL_2 },
 	};
