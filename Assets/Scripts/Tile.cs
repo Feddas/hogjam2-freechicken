@@ -29,6 +29,6 @@ public class Tile   {
 
 		//scene.DrawRectangle(this.TransformA, Color.white, x, y, 64, 64);
 		//scene.DrawRectangle(this.TransformB, Color.red, x + 8, y + 8, 48, 48);
-		scene.DrawImage(this.TransformA, "tile_wall", x, y, 64, 64);
+		scene.DrawImage(this.TransformA, "tile_wall", x, y, 64, 64, false);
 	}
 }

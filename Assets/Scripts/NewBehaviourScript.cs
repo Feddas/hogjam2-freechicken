@@ -151,6 +151,12 @@ public class NewBehaviourScript : MonoBehaviour
 		switch (id)
 		{
 			case "tile_wall": return this.wallMaterial;
+			case "player_beak_stand": return this.chickenRightBeak0;
+			case "player_beak_walk_1": return this.chickenRightBeak1;
+			case "player_beak_walk_2": return this.chickenRightBeak2;
+			case "player_nobeak_stand": return this.chickenRightNoBeak0;
+			case "player_nobeak_walk_1": return this.chickenRightNoBeak1;
+			case "player_nobeak_walk_2": return this.chickenRightNoBeak2;
 			default: throw new System.Exception("Unknown texture: " + id);
 		}
 	}
@@ -179,14 +185,14 @@ public class NewBehaviourScript : MonoBehaviour
 		rect.renderer.material.color = color;
 	}
 
-	public void DrawImage(Transform rect, string image, int x, int y, int width, int height)
+	public void DrawImage(Transform rect, string image, int x, int y, int width, int height, bool reverse)
 	{
 		float unityWidth = width * 40 / 3f / 1024;
 		float unityHeight = height * 40 / 3f / 1024;
 		float unityX = this.ConvertX(x) + unityWidth / 2;
 		float unityY = this.ConvertY(y) - unityHeight / 2;
 		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
-		rect.transform.localScale = new Vector3(unityWidth, unityHeight, 1);
+		rect.transform.localScale = new Vector3(reverse ? unityWidth : -unityWidth, -unityHeight, 1);
 		rect.renderer.material = this.GetTexture(image);
 	}
 

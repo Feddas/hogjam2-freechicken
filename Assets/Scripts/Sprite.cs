@@ -7,6 +7,9 @@ public class Sprite
 	public double ModelY;
 	public string Type;
 
+	private bool moving = false;
+	private bool faceRight = true;
+
 	private Tile ground = null;
 
 	private double GRAVITY = 1.2;
@@ -53,18 +56,37 @@ public class Sprite
 
 	public void Render(NewBehaviourScript scene, int cameraX, int cameraY)
 	{
+		++this.renderCounter;
 		this.transform = this.transform ?? scene.AllocateTransform();
 
 		int x = (int)this.ModelX - 32 - cameraX;
 		int y = (int)this.ModelY - 32 - cameraY;
 
-		scene.DrawRectangle(this.transform, this.CurrentColor, x, y, 64, 64);
+		bool reverse = false;
+		string imageId = null;
+		switch (this.Type)
+		{
+			case "player":
+				reverse = !this.faceRight;
+				imageId = "player_beak_" + (this.moving ? ("walk_" + (((this.renderCounter / 8) % 2) + 1)) : "stand");
+				break;
+
+			default:
+				throw new System.Exception("Unknown sprite ID");
+		}
+		scene.DrawImage(this.transform, imageId, x, y, 64, 64, reverse);
 	}
 
 	public void ApplyMovement(Level level)
 	{
 		double newX = this.ModelX + this.DX;
 		double groundY = this.ModelY + 32;
+
+		this.moving = true;
+		if (this.DX > 0) this.faceRight = true;
+		else if (this.DX < 0) this.faceRight = false;
+		else this.moving = false;
+		
 
 		// Apply horizontal component
 
