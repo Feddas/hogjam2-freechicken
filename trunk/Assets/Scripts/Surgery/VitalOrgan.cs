@@ -9,12 +9,10 @@ public class VitalOrgan : MonoBehaviour
 
 	void Start()
 	{
-	
 	}
 
 	void Update()
 	{
-	
 	}
 
 	private void OnCollisionEnter2D(Collision2D hitInfo)
@@ -30,8 +28,8 @@ public class VitalOrgan : MonoBehaviour
 				PartTracker.MicroChipsRemainingList.Remove(ValidChip);
 				if (PartTracker.MicroChipsRemainingList.Count == 0)
 				{
-					//GOTO next level
-					Debug.Log("level completed");
+					//Debug.Log("level completed");
+					Application.LoadLevel("Platformer");
 				}
 			}
 

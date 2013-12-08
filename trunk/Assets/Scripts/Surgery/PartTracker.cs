@@ -10,13 +10,11 @@ public class PartTracker : MonoBehaviour
 
 	public GameObject[] MicroChipsRemaining;
 
-	// Use this for initialization
 	void Start()
 	{
 		MicroChipsRemainingList = new List<GameObject>(MicroChipsRemaining);
 	}
-	
-	// Update is called once per frame
+
 	void Update()
 	{
 		if (CurrentPart != null)
