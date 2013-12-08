@@ -42,6 +42,10 @@ public class Tile   {
 		{
 			imageId = "door";
 		}
+		else if (this.ID == 'w')
+		{
+			imageId = "wtile";
+		}
 
 		if (this.Optimizations == 1)
 		{

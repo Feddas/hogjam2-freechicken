@@ -6,6 +6,7 @@ public class NewBehaviourScript : MonoBehaviour
 {
 	public Material wallMaterial;
 	public Material doorMaterial;
+	public Material wall2Material;
 
 	public Material chickenRightBeak0;
 	public Material chickenRightBeak1;
@@ -203,6 +204,7 @@ public class NewBehaviourScript : MonoBehaviour
 		{
 			case "tile_wall": return this.wallMaterial;
 			case "door": return this.doorMaterial;
+			case "wtile": return this.wall2Material;
 			case "player_beak_stand": return this.chickenRightBeak0;
 			case "player_beak_walk_1": return this.chickenRightBeak1;
 			case "player_beak_walk_2": return this.chickenRightBeak2;

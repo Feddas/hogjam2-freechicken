@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallMaterial: {fileID: 2100000, guid: 7ce23c1feaee49c4786148386636cf79, type: 2}
   doorMaterial: {fileID: 2100000, guid: 5bfc6c4120d45fa47bad80a2ae4b30e7, type: 2}
+  wall2Material: {fileID: 2100000, guid: 07a0bbb9c6df99946a134158d53992d6, type: 2}
   chickenRightBeak0: {fileID: 2100000, guid: fa35899a75fa4364e8edd78e8f3065c0, type: 2}
   chickenRightBeak1: {fileID: 2100000, guid: 03ab17313e19cef48b10dffb74561197, type: 2}
   chickenRightBeak2: {fileID: 2100000, guid: 21d746b15c049764abe54077b60e4e3b, type: 2}
