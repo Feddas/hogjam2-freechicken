@@ -46,6 +46,8 @@ public class NewBehaviourScript : MonoBehaviour
 		this.level = new Level("level_1");
 		this.player = new Sprite("player", 130, 300, null);
 		this.sprites.Add(this.player);
+
+		this.textThing.transform.position = new Vector3(this.ConvertX(10), this.ConvertY(10), 0);
 	}
 
 	private double lastTime = 0;
@@ -278,6 +280,11 @@ public class NewBehaviourScript : MonoBehaviour
 		int maxWidth = this.level.Width * 64;
 		int maxHeight = this.level.Height * 64;
 
+		if (cameraX < 0) cameraX = 0;
+		if (cameraY < 0) cameraY = 0;
+		if (cameraX > maxWidth - SCREEN_WIDTH) cameraX = maxWidth - SCREEN_WIDTH;
+		if (cameraY > maxHeight - SCREEN_HEIGHT) cameraY = maxHeight - SCREEN_HEIGHT;
+
 		if (maxWidth < SCREEN_WIDTH)
 		{
 			cameraX = -(SCREEN_WIDTH - maxWidth) / 2;
@@ -287,6 +294,8 @@ public class NewBehaviourScript : MonoBehaviour
 		{
 			cameraY = -(SCREEN_HEIGHT - maxHeight) / 2;
 		}
+
+		
 
 		this.level.Render(this, cameraX, cameraY);
 
