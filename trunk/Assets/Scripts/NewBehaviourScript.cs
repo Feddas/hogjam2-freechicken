@@ -48,6 +48,14 @@ public class NewBehaviourScript : MonoBehaviour
 		this.sprites.Add(this.player);
 
 		this.textThing.transform.position = new Vector3(this.ConvertX(10), this.ConvertY(10), 0);
+
+		foreach (int[] alienSpawn in this.level.alienSpawns)
+		{
+			int x = alienSpawn[0] * 64 + 32;
+			int y = alienSpawn[1] * 64 + 32;
+
+			this.sprites.Add(new Sprite("alien", x, y, null));
+		}
 	}
 
 	private double lastTime = 0;
@@ -186,6 +194,15 @@ public class NewBehaviourScript : MonoBehaviour
 			case "beak_1": return this.beak1;
 			case "beak_2": return this.beak2;
 			case "beak_3": return this.beak3;
+			case "alien_walk0_mouth0": return this.alienLeg1M1;
+			case "alien_walk0_mouth1": return this.alienLeg1M2;
+			case "alien_walk0_mouth2": return this.alienLeg1M3;
+			case "alien_walk1_mouth0": return this.alienLeg2M1;
+			case "alien_walk1_mouth1": return this.alienLeg2M2;
+			case "alien_walk1_mouth2": return this.alienLeg2M3;
+			case "alien_stand_mouth0": return this.alienLeg3M1;
+			case "alien_stand_mouth1": return this.alienLeg3M2;
+			case "alien_stand_mouth2": return this.alienLeg3M3;
 			default: throw new System.Exception("Unknown texture: " + id);
 		}
 	}
@@ -195,9 +212,6 @@ public class NewBehaviourScript : MonoBehaviour
 		this.sprites.Add(sprite);
 	}
 
-	private const float LEFT = 38 * 40 / 3f / 1024 - 20 / 3f;
-	private const float TOP = -(166 * 40 / 3f / 1024 - 20 / 3f);
-
 	private float ConvertX(int pixelX)
 	{
 		return pixelX * 40 / 3f / 1024 - 20 / 3f;
@@ -206,11 +220,6 @@ public class NewBehaviourScript : MonoBehaviour
 	private float ConvertY(int pixelY)
 	{
 		return -((pixelY + 128) * 40 / 3f / 1024 - 20 / 3f);
-	}
-
-	public void ShowDebugText()
-	{
-
 	}
 
 	public void DrawRectangle(Transform rect, Color color, int x, int y, int width, int height)

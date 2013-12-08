@@ -11,9 +11,9 @@ public class Sprite
 	private bool moving = false;
 	private bool faceRight = true;
 
-
 	private bool floats = false;
 	private Tile ground = null;
+	private bool lastWasCollision = false;
 
 	private double GRAVITY = 1.2;
 
@@ -59,10 +59,13 @@ public class Sprite
 	private Transform transform = null;
 	private int renderCounter = 0;
 
+	private static readonly System.Random random = new System.Random();
+
 	private const int POINT_COUNT = 120;
 	private double[] xs;
 	private double[] ys;
 	private int beakCounter = 0;
+	private bool paceLeft = random.NextDouble() < .5;
 
 	public Sprite(string type, double x, double y, object arg)
 	{
@@ -89,15 +92,19 @@ public class Sprite
 				{
 					xs[i] -= radius; // meh, tired of debugging the math. this'll do.
 				}
-				ys[i] = System.Math.Sin(3.14159 * 2 * i / POINT_COUNT) * radius + centerY;
+				ys[i] = -System.Math.Sin(3.14159 * 2 * i / POINT_COUNT) * radius + centerY;
 			}
+		}
+		else if (type == "alien")
+		{
+
 		}
 	}
 
 	public void Render(NewBehaviourScript scene, int cameraX, int cameraY)
 	{
 		if (this.isDead) return;
-
+		
 		++this.renderCounter;
 		this.transform = this.transform ?? scene.AllocateTransform();
 
@@ -117,9 +124,23 @@ public class Sprite
 				imageId = "beak_" + ((this.renderCounter / 6) % 4);
 				break;
 
+			case "alien":
+				reverse = this.faceRight;
+				string mouthSuffix = "_mouth" + (this.renderCounter % 3);
+				if (this.moving)
+				{
+					imageId = "alien_walk" + ((this.renderCounter / 4) % 2 ) + mouthSuffix;
+				}
+				else
+				{
+					imageId = "alien_stand" + mouthSuffix;
+				}
+				break;
+
 			default:
 				throw new System.Exception("Unknown sprite ID");
 		}
+
 		scene.DrawImage(this.transform, imageId, x, y, 64, 64, reverse);
 	}
 
@@ -133,8 +154,6 @@ public class Sprite
 				{
 					this.ModelX = xs[this.beakCounter];
 					this.ModelY = ys[this.beakCounter];
-					//*
-					//*/
 				}
 				else
 				{
@@ -163,12 +182,53 @@ public class Sprite
 				this.beakCounter++;
 				break;
 
+			case "alien":
+				// if cross tile boundary check if there's ground
+				if (this.lastWasCollision)
+				{
+					this.paceLeft = !this.paceLeft;
+					this.lastWasCollision = false;
+				}
+
+				this.DX = this.paceLeft ? -1 : 1;
+
+				int oldX = (int)(this.ModelX / 64);
+				int newX = (int)((this.ModelX + this.DX) / 64);
+				if (oldX != newX)
+				{
+					bool bounce = false;
+					int groundY = (int)((this.ModelY + 33) / 64);
+					if (groundY >= scene.Level.Height)
+					{
+						bounce = true;
+					}
+					else
+					{
+						if (scene.Level.Tiles[newX][groundY] == null)
+						{
+							bounce = true;
+						}
+					}
+
+					if (bounce)
+					{
+						this.DX = 0;
+						this.paceLeft = !this.paceLeft;
+					}
+				}
+
+
+
+				break;
+
 			default: break;
 		}
 	}
 
 	public void ApplyMovement(Level level)
 	{
+		this.lastWasCollision = false;
+
 		if (this.floats) return;
 
 		double newX = this.ModelX + this.DX;
@@ -182,10 +242,14 @@ public class Sprite
 
 		// Apply horizontal component
 
-		if (this.LocationAllowed(level, newX, groundY - .000001) && 
+		if (this.LocationAllowed(level, newX, groundY - .000001) &&
 			this.LocationAllowed(level, newX, groundY - 48))
 		{
 			this.ModelX = newX;
+		}
+		else
+		{
+			this.lastWasCollision = true;
 		}
 
 		this.DX = 0;

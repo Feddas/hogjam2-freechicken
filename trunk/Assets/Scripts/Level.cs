@@ -9,6 +9,8 @@ public class Level
 	public int Width;
 	public int Height;
 
+	public List<int[]> alienSpawns = new List<int[]>();
+
 	public Level(string title)
 	{
 		MapData data = MapData.RAW_LEVEL_DATA[title];
@@ -22,7 +24,13 @@ public class Level
 		{
 			for (y = 0; y < height; ++y)
 			{
-				column.Add(this.GetTile(rawTileData[y][x], x, y));
+				char id = rawTileData[y][x];
+				if (id == 'A')
+				{
+					id = ' ';
+					this.alienSpawns.Add(new int[] { x, y });
+				}
+				column.Add(this.GetTile(id, x, y));
 			}
 			columns.Add(column.ToArray());
 			column.Clear();
