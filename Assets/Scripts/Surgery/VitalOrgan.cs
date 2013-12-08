@@ -7,6 +7,8 @@ public class VitalOrgan : MonoBehaviour
 {
 	public ParticleSystem bloodsplat;
 	public GameObject ValidChip;
+	public AudioClip Squirt;
+	public AudioClip Success;
 
 	void Start()
 	{
@@ -26,6 +28,7 @@ public class VitalOrgan : MonoBehaviour
 			if (PartTracker.MicroChipsRemainingList != null
 			    && PartTracker.MicroChipsRemainingList.Contains(ValidChip))
 			{
+				playAudio(Success);
 				PartTracker.MicroChipsRemainingList.Remove(ValidChip);
 				if (PartTracker.MicroChipsRemainingList.Count == 0)
 				{
@@ -55,7 +58,17 @@ public class VitalOrgan : MonoBehaviour
 			Destroy(bloodParticles.gameObject, 3.0f);
 
 			if (audio.isPlaying == false)
-				audio.Play();
+				playAudio(Squirt);
 		}
+	}
+
+	private void playAudio(AudioClip clip)
+	{
+		if (clip == null)
+			return;
+
+		audio.Stop();
+		audio.clip = clip;
+		audio.Play();
 	}
 }
