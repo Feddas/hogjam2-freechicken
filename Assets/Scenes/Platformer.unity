@@ -252,6 +252,7 @@ MonoBehaviour:
   beak1: {fileID: 2100000, guid: d70d09f10cd8cb54abd7d50a8489b51f, type: 2}
   beak2: {fileID: 2100000, guid: 986b960836352e84dab23a6c34cc0264, type: 2}
   beak3: {fileID: 2100000, guid: 6450c8c4b32c0f04c8f0b89cd202ab7c, type: 2}
+  feather: {fileID: 2100000, guid: 138e3232047ce384bb34a29ecc5ec8e5, type: 2}
   alienLeg1M1: {fileID: 2100000, guid: dd8eff5f25cb3e147a9ded6b726343ea, type: 2}
   alienLeg1M2: {fileID: 2100000, guid: 00584fc74879f0649a171a28084facc7, type: 2}
   alienLeg1M3: {fileID: 2100000, guid: 0bca778256e22d643bfb14d24967c901, type: 2}
