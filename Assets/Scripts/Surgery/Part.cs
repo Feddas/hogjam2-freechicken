@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Part : MonoBehaviour {
-
+public class Part : MonoBehaviour
+{
 	// Use this for initialization
 	void Start()
 	{
