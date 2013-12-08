@@ -166,8 +166,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b82dd00166a9a4ca693c1cee1838e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallTexture: {fileID: 0}
   wallMaterial: {fileID: 2100000, guid: 7ce23c1feaee49c4786148386636cf79, type: 2}
+  chickenRightBeak0: {fileID: 2100000, guid: fa35899a75fa4364e8edd78e8f3065c0, type: 2}
+  chickenRightBeak1: {fileID: 2100000, guid: 03ab17313e19cef48b10dffb74561197, type: 2}
+  chickenRightBeak2: {fileID: 2100000, guid: 21d746b15c049764abe54077b60e4e3b, type: 2}
+  chickenRightNoBeak0: {fileID: 2100000, guid: 292b11f75619d284ab8a1f73110a0818, type: 2}
+  chickenRightNoBeak1: {fileID: 2100000, guid: 78ca44a002daacd4bb89fb92ba329686, type: 2}
+  chickenRightNoBeak2: {fileID: 2100000, guid: 50880bfd4c9968a47bfffb087b6a59aa, type: 2}
   cube: {fileID: 2006202600}
 --- !u!1 &1397922874
 GameObject:
