@@ -12,7 +12,8 @@ public class Level
 	public List<int[]> alienSpawns = new List<int[]>();
 
 	public Dictionary<int, string> DoorHookup = new Dictionary<int, string>();
-
+	public Dictionary<int, string> TargetDoorInfo = new Dictionary<int, string>();
+	public Dictionary<int, int[]> DoorLocations = new Dictionary<int, int[]>();
 	public Level(string title)
 	{
 		MapData data = MapData.RAW_LEVEL_DATA[title];
@@ -36,6 +37,8 @@ public class Level
 				{
 					int doorNum = id - '0';
 					this.DoorHookup[doorNum] = data.DoorLookup.ContainsKey(doorNum) ? data.DoorLookup[doorNum] : null;
+					this.DoorLocations[doorNum] = new int[] { x, y };
+					this.TargetDoorInfo[doorNum] = data.TargetDoorInfo.ContainsKey(doorNum) ? data.TargetDoorInfo[doorNum] : null;
 				}
 				column.Add(this.GetTile(id, x, y));
 			}
