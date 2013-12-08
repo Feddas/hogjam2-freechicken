@@ -5,6 +5,13 @@ using System.Collections.Generic;
 public class NewBehaviourScript : MonoBehaviour
 {
 	public Material wallMaterial;
+	public Material chickenRightBeak0;
+	public Material chickenRightBeak1;
+	public Material chickenRightBeak2;
+	public Material chickenRightNoBeak0;
+	public Material chickenRightNoBeak1;
+	public Material chickenRightNoBeak2;
+
 	public Transform cube;
 
 	private double x = 0;
