@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 
+[RequireComponent(typeof(AudioSource))]
 public class VitalOrgan : MonoBehaviour
 {
 	public ParticleSystem bloodsplat;
@@ -52,6 +53,9 @@ public class VitalOrgan : MonoBehaviour
 			bloodsplat.renderer.sortingOrder = 2;
 			var bloodParticles = Instantiate(bloodsplat, contact3d, this.transform.rotation) as ParticleSystem;
 			Destroy(bloodParticles.gameObject, 3.0f);
+
+			if (audio.isPlaying == false)
+				audio.Play();
 		}
 	}
 }
