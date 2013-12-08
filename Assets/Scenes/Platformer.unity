@@ -243,7 +243,22 @@ MonoBehaviour:
   chickenRightNoBeak0: {fileID: 2100000, guid: 292b11f75619d284ab8a1f73110a0818, type: 2}
   chickenRightNoBeak1: {fileID: 2100000, guid: 78ca44a002daacd4bb89fb92ba329686, type: 2}
   chickenRightNoBeak2: {fileID: 2100000, guid: 50880bfd4c9968a47bfffb087b6a59aa, type: 2}
+  beak0: {fileID: 2100000, guid: 762fb276e6e63bd4eaa1d104063e0e96, type: 2}
+  beak1: {fileID: 2100000, guid: d70d09f10cd8cb54abd7d50a8489b51f, type: 2}
+  beak2: {fileID: 2100000, guid: 986b960836352e84dab23a6c34cc0264, type: 2}
+  beak3: {fileID: 2100000, guid: 6450c8c4b32c0f04c8f0b89cd202ab7c, type: 2}
+  alienLeg1M1: {fileID: 2100000, guid: dd8eff5f25cb3e147a9ded6b726343ea, type: 2}
+  alienLeg1M2: {fileID: 2100000, guid: 00584fc74879f0649a171a28084facc7, type: 2}
+  alienLeg1M3: {fileID: 2100000, guid: 0bca778256e22d643bfb14d24967c901, type: 2}
+  alienLeg2M1: {fileID: 2100000, guid: d453293b3d46c1647b02fdd6e0f60a15, type: 2}
+  alienLeg2M2: {fileID: 2100000, guid: 6c00121f5f3497a41803dc349d293a1e, type: 2}
+  alienLeg2M3: {fileID: 2100000, guid: 90b1f5eeaf8367440a498b54a1dc0600, type: 2}
+  alienLeg3M1: {fileID: 2100000, guid: 2fb6d6f8ab645a84d8dc89a790165ee4, type: 2}
+  alienLeg3M2: {fileID: 2100000, guid: e473366ce3395104384ce8fed543f423, type: 2}
+  alienLeg3M3: {fileID: 2100000, guid: 1cd5e8e8e9f99c54aa69be6855108655, type: 2}
+  alienFiring: {fileID: 2100000, guid: 11f35d17be2082940b7976c3ab12d291, type: 2}
   quad: {fileID: 978952407}
+  textThing: {fileID: 1589030025}
 --- !u!1 &1397922874
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +318,56 @@ Transform:
   m_GameObject: {fileID: 1397922874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!1 &1589030023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1589030025}
+  - 132: {fileID: 1589030024}
+  m_Layer: 0
+  m_Name: GUI Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!132 &1589030024
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1589030023}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: Gui Text
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 12
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
+--- !u!4 &1589030025
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1589030023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: .5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

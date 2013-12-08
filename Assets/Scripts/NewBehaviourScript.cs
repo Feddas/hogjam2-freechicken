@@ -12,22 +12,39 @@ public class NewBehaviourScript : MonoBehaviour
 	public Material chickenRightNoBeak1;
 	public Material chickenRightNoBeak2;
 
+	public Material beak0;
+	public Material beak1;
+	public Material beak2;
+	public Material beak3;
+
+	public Material alienLeg1M1;
+	public Material alienLeg1M2;
+	public Material alienLeg1M3;
+	public Material alienLeg2M1;
+	public Material alienLeg2M2;
+	public Material alienLeg2M3;
+	public Material alienLeg3M1;
+	public Material alienLeg3M2;
+	public Material alienLeg3M3;
+
+	public Material alienFiring;
+
 	//public Transform cube;
 	public Transform quad;
-
-	private double x = 0;
-	private double y = 0;
+	public Transform textThing;
 
 	private Sprite player;
 
 	private Level level;
+
+	public Level Level { get { return this.level; } }
 
 	void Start()
 	{
 		this.quad.transform.position = new Vector3(999999, 999999, 0); // hide!
 
 		this.level = new Level("level_1");
-		this.player = new Sprite("player", 100, 100);
+		this.player = new Sprite("player", 130, 300, null);
 		this.sprites.Add(this.player);
 	}
 
@@ -48,7 +65,6 @@ public class NewBehaviourScript : MonoBehaviour
 	private double previousY = 0;
 
 	private bool spacePressed = false;
-	private bool shiftPressed = false;
 
 	private void ProcessInput()
 	{
@@ -112,6 +128,11 @@ public class NewBehaviourScript : MonoBehaviour
 			this.spacePressed = spacePressed;
 		}
 
+		if (Input.GetKeyDown(KeyCode.B))
+		{
+			this.player.RemoveBeak(this);
+		}
+
 	}
 
 	List<Sprite> sprites = new List<Sprite>();
@@ -136,6 +157,7 @@ public class NewBehaviourScript : MonoBehaviour
 	private List<Transform> freeTransforms = new List<Transform>();
 	public void RemoveTransform(Transform transform)
 	{
+		if (transform == null) return;
 		transform.transform.position = new Vector3(-999999, 0, 0);
 		this.freeTransforms.Add(transform);
 	}
@@ -158,8 +180,17 @@ public class NewBehaviourScript : MonoBehaviour
 			case "player_nobeak_stand": return this.chickenRightNoBeak0;
 			case "player_nobeak_walk_1": return this.chickenRightNoBeak1;
 			case "player_nobeak_walk_2": return this.chickenRightNoBeak2;
+			case "beak_0": return this.beak0;
+			case "beak_1": return this.beak1;
+			case "beak_2": return this.beak2;
+			case "beak_3": return this.beak3;
 			default: throw new System.Exception("Unknown texture: " + id);
 		}
+	}
+
+	public void AddSprite(Sprite sprite)
+	{
+		this.sprites.Add(sprite);
 	}
 
 	private const float LEFT = 38 * 40 / 3f / 1024 - 20 / 3f;
@@ -173,6 +204,11 @@ public class NewBehaviourScript : MonoBehaviour
 	private float ConvertY(int pixelY)
 	{
 		return -((pixelY + 128) * 40 / 3f / 1024 - 20 / 3f);
+	}
+
+	public void ShowDebugText()
+	{
+
 	}
 
 	public void DrawRectangle(Transform rect, Color color, int x, int y, int width, int height)
@@ -213,8 +249,21 @@ public class NewBehaviourScript : MonoBehaviour
 	{
 		foreach (Sprite sprite in this.sprites)
 		{
-			sprite.ApplyMovement(this.level);
+			sprite.ApplyAutomation(this);
 		}
+
+		List<Sprite> newSprites = new List<Sprite>();
+		foreach (Sprite sprite in this.sprites)
+		{
+			sprite.ApplyMovement(this.level);
+
+			if (!sprite.isDead)
+			{
+				newSprites.Add(sprite);
+			}
+		}
+
+		this.sprites = newSprites;
 
 	}
 

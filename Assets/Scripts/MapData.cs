@@ -15,6 +15,8 @@ public class MapData
 	{
 		Tiles = new string[] {
 			"xxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxx",
 			"x                       x",
 			"x  x                    x",
 			"x                       x",
@@ -22,6 +24,9 @@ public class MapData
 			"x                       x",
 			"x         xxx           x",
 			"x         xxx           x",
+			"xxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxx",
+			"xxxxxxxxxxxxxxxxxxxxxxxxx",
 			"xxxxxxxxxxxxxxxxxxxxxxxxx",
 		}
 	};
