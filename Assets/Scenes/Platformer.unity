@@ -239,6 +239,7 @@ MonoBehaviour:
   wallMaterial: {fileID: 2100000, guid: 7ce23c1feaee49c4786148386636cf79, type: 2}
   doorMaterial: {fileID: 2100000, guid: 5bfc6c4120d45fa47bad80a2ae4b30e7, type: 2}
   wall2Material: {fileID: 2100000, guid: 07a0bbb9c6df99946a134158d53992d6, type: 2}
+  bgMaterial: {fileID: 2100000, guid: 720c46dbc80e7c64498d0b3bee6b0531, type: 2}
   cutscenePage0: {fileID: 2100000, guid: 3e308980860a5a547b374adfb548c821, type: 2}
   cutscenePage1: {fileID: 2100000, guid: 381f1419466eaca4fb697a365cecc46e, type: 2}
   cutscenePage2: {fileID: 2100000, guid: ce306a5e791cd6649b8a2ab289ea7e7e, type: 2}

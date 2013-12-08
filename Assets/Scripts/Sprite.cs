@@ -7,7 +7,7 @@ public class Sprite
 	public double ModelY;
 	public string Type;
 
-	private bool hasBeak = true;
+	public bool hasBeak = true;
 	private bool moving = false;
 	private bool faceRight = true;
 
@@ -76,6 +76,8 @@ public class Sprite
 	private double[] ys;
 	private int beakCounter = 0;
 	private bool paceLeft = random.NextDouble() < .5;
+	public bool FriendlyProjectile = false;
+	public bool HostileProjectile = false;
 
 	public Sprite(string type, double x, double y, object arg)
 	{
@@ -104,6 +106,7 @@ public class Sprite
 				}
 				ys[i] = -System.Math.Sin(3.14159 * 2 * i / POINT_COUNT) * radius + centerY;
 			}
+			this.FriendlyProjectile = true;
 		}
 		else if (type == "feather")
 		{
@@ -111,6 +114,7 @@ public class Sprite
 			Sprite player = arg as Sprite;
 			this.player = player;
 			this.faceRight = this.player.faceRight;
+			this.FriendlyProjectile = true;
 		}
 		else if (type == "alien")
 		{

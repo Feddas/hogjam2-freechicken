@@ -7,7 +7,9 @@ public class NewBehaviourScript : MonoBehaviour
 	public Material wallMaterial;
 	public Material doorMaterial;
 	public Material wall2Material;
-	
+
+	public Material bgMaterial;
+
 	public Material cutscenePage0;
 	public Material cutscenePage1;
 	public Material cutscenePage2;
@@ -238,6 +240,7 @@ public class NewBehaviourScript : MonoBehaviour
 			case "win_0": return this.cutscenePage0;
 			case "win_1": return this.cutscenePage1;
 			case "win_2": return this.cutscenePage2;
+			case "bg": return this.bgMaterial;
 			default: throw new System.Exception("Unknown texture: " + id);
 		}
 	}
@@ -331,6 +334,10 @@ public class NewBehaviourScript : MonoBehaviour
 		}
 
 		List<Sprite> newSprites = new List<Sprite>();
+		List<Sprite> aliens = new List<Sprite>();
+		List<Sprite> friendlyProjectiles = new List<Sprite>();
+		List<Sprite> hostileProjectiles = new List<Sprite>();
+
 		foreach (Sprite sprite in this.sprites)
 		{
 			sprite.ApplyMovement(this.level);
@@ -338,6 +345,47 @@ public class NewBehaviourScript : MonoBehaviour
 			if (!sprite.isDead)
 			{
 				newSprites.Add(sprite);
+
+				if (sprite.Type == "alien") aliens.Add(sprite);
+				else if (sprite.FriendlyProjectile) friendlyProjectiles.Add(sprite);
+				else if (sprite.HostileProjectile) hostileProjectiles.Add(sprite);
+			}
+		}
+
+		double dx, dy, d;
+		double rx, ry;
+		Sprite fp, al;
+		for (int i = 0; i < friendlyProjectiles.Count; ++i)
+		{
+			fp = friendlyProjectiles[i];
+			rx = fp.ModelX;
+			ry = fp.ModelY;
+
+			if (fp.Type == "beak")
+			{
+				rx += 12;
+				ry -= 12;
+			}
+
+			for (int j = 0; j < aliens.Count; ++j)
+			{
+				al = aliens[j];
+				dx = al.ModelX - rx;
+				dy = al.ModelY - ry;
+				d = dx * dx + dy * dy;
+				if (d < 32 * 32)
+				{
+					al.Kill(this);
+					aliens.RemoveAt(j);
+					fp.Kill(this);
+					if (fp.Type == "beak")
+					{
+						this.player.hasBeak = true;
+					}
+					friendlyProjectiles.RemoveAt(i);
+					--i;
+					break;
+				}
 			}
 		}
 
@@ -391,6 +439,8 @@ public class NewBehaviourScript : MonoBehaviour
 		this.DrawImage(this.finalCutsceneTransform, "win_" + this.cutsceneIndex, 0, 0, 1024, 768, false);
 	}
 
+	private Transform bgTrans = null;
+
 	private void Render()
 	{
 		if (this.cutsceneIndex >= 0)
@@ -398,6 +448,13 @@ public class NewBehaviourScript : MonoBehaviour
 			this.DoCutsceneRender();
 			return;
 		}
+
+		if (this.bgTrans == null)
+		{
+			this.bgTrans = this.AllocateTransform();
+		}
+
+		this.DrawImage(this.bgTrans, "bg", 0, 0, 1024, 768, false);
 
 		int cameraX = (int)this.player.ModelX - SCREEN_WIDTH / 2;
 		int cameraY = (int)this.player.ModelY - SCREEN_HEIGHT / 2;
