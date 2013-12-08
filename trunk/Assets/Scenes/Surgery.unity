@@ -247,6 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodsplat: {fileID: 19800000, guid: 0245d2ab341a8094fb17f7617f9d0280, type: 2}
   ValidChip: {fileID: 189247602}
+  Squirt: {fileID: 8300000, guid: b33cc5446d4dd6e4f91e32c1cab2ac0f, type: 3}
+  Success: {fileID: 8300000, guid: 53f001260b3888f44b183d7e494e9f41, type: 3}
 --- !u!50 &357638047
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -410,6 +412,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodsplat: {fileID: 19800000, guid: 0245d2ab341a8094fb17f7617f9d0280, type: 2}
   ValidChip: {fileID: 615043158}
+  Squirt: {fileID: 8300000, guid: b33cc5446d4dd6e4f91e32c1cab2ac0f, type: 3}
+  Success: {fileID: 8300000, guid: 53f001260b3888f44b183d7e494e9f41, type: 3}
 --- !u!50 &527125309
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -801,6 +805,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodsplat: {fileID: 19800000, guid: 0245d2ab341a8094fb17f7617f9d0280, type: 2}
   ValidChip: {fileID: 604086447}
+  Squirt: {fileID: 8300000, guid: b33cc5446d4dd6e4f91e32c1cab2ac0f, type: 3}
+  Success: {fileID: 8300000, guid: 53f001260b3888f44b183d7e494e9f41, type: 3}
 --- !u!50 &690814580
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1169,6 +1175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodsplat: {fileID: 19800000, guid: 0245d2ab341a8094fb17f7617f9d0280, type: 2}
   ValidChip: {fileID: 594702959}
+  Squirt: {fileID: 8300000, guid: b33cc5446d4dd6e4f91e32c1cab2ac0f, type: 3}
+  Success: {fileID: 8300000, guid: 53f001260b3888f44b183d7e494e9f41, type: 3}
 --- !u!50 &1461459812
 Rigidbody2D:
   m_ObjectHideFlags: 0
