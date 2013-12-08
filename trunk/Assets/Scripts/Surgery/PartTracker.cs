@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public class PartTracker : MonoBehaviour
 {
 	public static Transform CurrentPart;
+	public static IList<GameObject> MicroChipsRemainingList;
+
+	public GameObject[] MicroChipsRemaining;
 
 	// Use this for initialization
 	void Start()
 	{
-	
+		MicroChipsRemainingList = new List<GameObject>(MicroChipsRemaining);
 	}
 	
 	// Update is called once per frame
@@ -29,5 +34,4 @@ public class PartTracker : MonoBehaviour
 		pos2D.z = 0;
 		CurrentPart.position = pos2D;
 	}
-
 }

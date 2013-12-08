@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class VitalOrgan : MonoBehaviour
 {
 	public ParticleSystem bloodsplat;
+	public GameObject ValidChip;
 
 	void Start()
 	{
@@ -20,14 +22,38 @@ public class VitalOrgan : MonoBehaviour
 		if (bloodsplat == null)
 			return;
 
-		foreach (var contact in hitInfo.contacts)
+		if (ValidChip != null && hitInfo.gameObject == ValidChip)
+		{
+			if (PartTracker.MicroChipsRemainingList != null
+			    && PartTracker.MicroChipsRemainingList.Contains(ValidChip))
+			{
+				PartTracker.MicroChipsRemainingList.Remove(ValidChip);
+				if (PartTracker.MicroChipsRemainingList.Count == 0)
+				{
+					//GOTO next level
+					Debug.Log("level completed");
+				}
+			}
+
+			Destroy(ValidChip);
+		}
+		else
+		{
+			gushBlood(hitInfo.contacts);
+		}
+	}
+
+	private void gushBlood(ContactPoint2D[] contacts)
+	{
+		foreach (var contact in contacts)
 		{
 			Vector3 contact3d = new Vector3(contact.point.x, contact.point.y, 0);
-
+			
 			// Set the sorting layer of the particle system. http://answers.unity3d.com/questions/579490/unity-43-particle-system-not-visible-in-2d-mode.html
 			bloodsplat.renderer.sortingLayerName = "Foreground";
 			bloodsplat.renderer.sortingOrder = 2;
-			Instantiate(bloodsplat, contact3d, this.transform.rotation);
+			var bloodParticles = Instantiate(bloodsplat, contact3d, this.transform.rotation) as ParticleSystem;
+			Destroy(bloodParticles.gameObject, 3.0f);
 		}
 	}
 }
