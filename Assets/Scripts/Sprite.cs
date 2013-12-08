@@ -9,14 +9,14 @@ public class Sprite
 
 	private Tile ground = null;
 
-	private double GRAVITY = .2;
+	private double GRAVITY = 1.2;
 
 	public void Jump()
 	{
 		if (this.ground != null)
 		{
 			this.ground = null;
-			this.vy = -32;
+			this.vy = -24;
 		}
 	}
 
@@ -127,11 +127,8 @@ public class Sprite
 				this.ground = level.Tiles[tileX][tileY];
 				this.ModelY = tileY * 64 - 32;
 				this.vy = 0;
-				Debug.Log("Hit ground!" + tileY + " [" + (++this.counter) + "] " + this.ModelY);
 			}
 		}
-
-		//Debug.Log("Player at: " + this.ModelX + ", " + (this.ModelY + 32));
 	}
 	private int counter = 0;
 
