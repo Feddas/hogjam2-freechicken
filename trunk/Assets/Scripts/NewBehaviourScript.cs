@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+	public Transform wallTexture;
+	public Material wallMaterial;
 	public Transform cube;
 
 	private double x = 0;
@@ -138,17 +140,48 @@ public class NewBehaviourScript : MonoBehaviour
 		conversionOut[1] = y * 40 / 3f / 768 - 20 / 3f;
 	}
 
+	private Material GetTexture(string id)
+	{
+		switch (id)
+		{
+			case "tile_wall": return this.wallMaterial;
+			default: throw new System.Exception("Unknown texture: " + id);
+		}
+	}
+
+	private const float LEFT = 38 * 40 / 3f / 1024 - 20 / 3f;
+	private const float TOP = -(166 * 40 / 3f / 1024 - 20 / 3f);
+
+	private float ConvertX(int pixelX)
+	{
+		return pixelX * 40 / 3f / 1024 - 20 / 3f;
+	}
+
+	private float ConvertY(int pixelY)
+	{
+		return -((pixelY + 128) * 40 / 3f / 1024 - 20 / 3f);
+	}
+
 	public void DrawRectangle(Transform rect, Color color, int x, int y, int width, int height)
 	{
-		x += width / 2;
-		y += height / 2;
-		float unityX = x * 40 / 3f / 1024 - 20 / 3f;
-		float unityY = -(y * 40 / 3f / 1024 - 20 / 3f);
-		float unityWidth = width * 40 / 3f;
-		float unityHeight = height * 40 / 3f;
+		float unityWidth = width * 40 / 3f / 1024;
+		float unityHeight = height * 40 / 3f / 1024;
+		float unityX = this.ConvertX(x) + unityWidth / 2;
+		float unityY = this.ConvertY(y) - unityHeight / 2;
 		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
-		rect.transform.localScale = new Vector3(width / 64f, height / 64f, 1);
+		rect.transform.localScale = new Vector3(unityWidth, unityHeight, 1);
 		rect.renderer.material.color = color;
+	}
+
+	public void DrawImage(Transform rect, string image, int x, int y, int width, int height)
+	{
+		float unityWidth = width * 40 / 3f / 1024;
+		float unityHeight = height * 40 / 3f / 1024;
+		float unityX = this.ConvertX(x) + unityWidth / 2;
+		float unityY = this.ConvertY(y) - unityHeight / 2;
+		rect.transform.position = new Vector3(unityX, unityY, this.z-- / 10000f);
+		rect.transform.localScale = new Vector3(unityWidth, unityHeight, 1);
+		rect.renderer.material = this.GetTexture(image);
 	}
 
 	void Update()
@@ -199,5 +232,32 @@ public class NewBehaviourScript : MonoBehaviour
 		{
 			sprite.Render(this, cameraX, cameraY);
 		}
+
+		/*
+		++fooCounter;
+		int index = 0;
+		for (int y = 0; y < 768; y += 64)
+		{
+			for (int x = 0; x < 1024; x += 64)
+			{
+				Transform t = test[index];
+				if (t == null) {
+					t = AllocateTransform();
+					test[index] = t;
+					c[index] = new Color((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
+				}
+				this.DrawRectangle(t, c[index], x, y, fooCounter % 64 + 1, fooCounter % 64 + 1);
+				++index;
+
+			}
+		}//*/
+
 	}
+
+	private int fooCounter = 0;
+
+	private System.Random r = new System.Random();
+
+	private Color[] c = new Color[1024 / 64 * 1024 / 64];
+	private Transform[] test = new Transform[1024 / 64 * 1024 / 64];
 }
