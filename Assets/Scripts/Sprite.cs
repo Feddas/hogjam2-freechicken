@@ -267,7 +267,7 @@ public class Sprite
 		}
 	}
 
-	public void ApplyMovement(Level level)
+	public bool ApplyMovement(Level level)
 	{
 		featherCooldown--;
 		this.lastWasCollision = false;
@@ -295,7 +295,7 @@ public class Sprite
 
 		this.DX = 0;
 
-		if (this.floats) return;
+		if (this.floats) return true;
 
 		int tileX = (int)(this.ModelX / 64);
 		int tileY = (int)(groundY / 64);
@@ -345,11 +345,22 @@ public class Sprite
 			else // feet hit the ground
 			{
 				tileY = (int)(newGroundY / 64);
-				this.ground = level.Tiles[tileX][tileY];
-				this.ModelY = tileY * 64 - 32;
-				this.vy = 0;
+				
+				if (tileY < level.Tiles[0].Length)
+				{
+					this.ground = level.Tiles[tileX][tileY];
+					this.ModelY = tileY * 64 - 32;
+					this.vy = 0;
+				}
+				else
+				{
+					//could not find ground to walk on
+					return false;
+				}
 			}
 		}
+
+		return true;
 	}
 
 

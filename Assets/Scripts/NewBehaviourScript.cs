@@ -355,7 +355,10 @@ public class NewBehaviourScript : MonoBehaviour
 
 		foreach (Sprite sprite in this.sprites)
 		{
-			sprite.ApplyMovement(this.level);
+			if (sprite.ApplyMovement(this.level) == false) //movement failed, flag player for death
+			{
+				this.deathSequenceCounter = 0;
+			}
 
 			if (!sprite.isDead)
 			{
@@ -544,11 +547,12 @@ public class NewBehaviourScript : MonoBehaviour
 			if (!showPlayer && sprite.Type == "player")
 			{
 				int counter = 120 - this.deathSequenceCounter;
+
 				int x = this.deathLocation[0];
 				int t = counter - 30;
 				int y = this.deathLocation[1] + (t * t) / 10 - 64;
 
-				this.DrawImage(this.chickenTrans, "chicken", x - 32 - cameraX, y - 32 - cameraY, 64, 64, false);
+ 				this.DrawImage(this.chickenTrans, "chicken", x - 32 - cameraX, y - 32 - cameraY, 64, 64, false);
 				this.player.Render(this, -999999, -99999);
 			}
 			else
